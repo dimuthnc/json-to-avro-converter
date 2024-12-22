@@ -1,0 +1,181 @@
+
+POST http://localhost:8080/api/expense
+Content-Type: application/json
+
+###
+GET http://localhost:8080/api/expense
+
+###
+POST http://localhost:8080/json-to-avro
+
+{
+  "json" : {
+    "userId": "user123",
+    "personalInfo": {
+      "firstName": "John",
+      "lastName": "Doe",
+      "age": 28
+    },
+    "preferences": {
+      "language": "English",
+      "newsletterSubscribed": true
+    },
+    "loginHistory": [
+      {
+        "loginTime": "2024-12-01T10:15:30Z",
+        "ipAddress": "192.168.1.1"
+      },
+      {
+        "loginTime": "2024-12-02T11:20:45Z",
+        "ipAddress": "192.168.1.2"
+      }
+    ]
+  },
+  "schema" : {
+    "type": "record",
+    "name": "UserProfile",
+    "namespace": "com.example",
+    "fields": [
+      {
+        "name": "userId",
+        "type": "string"
+      },
+      {
+        "name": "personalInfo",
+        "type": {
+          "type": "record",
+          "name": "PersonalInfo",
+          "fields": [
+            {
+              "name": "firstName",
+              "type": "string"
+            },
+            {
+              "name": "lastName",
+              "type": "string"
+            },
+            {
+              "name": "age",
+              "type": "int"
+            }
+          ]
+        }
+      },
+      {
+        "name": "preferences",
+        "type": {
+          "type": "record",
+          "name": "Preferences",
+          "fields": [
+            {
+              "name": "language",
+              "type": "string"
+            },
+            {
+              "name": "newsletterSubscribed",
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      {
+        "name": "loginHistory",
+        "type": {
+          "type": "array",
+          "items": {
+            "type": "record",
+            "name": "LoginRecord",
+            "fields": [
+              {
+                "name": "loginTime",
+                "type": "string"
+              },
+              {
+                "name": "ipAddress",
+                "type": "string"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
+
+###
+POST http://localhost:8080/avro-to-json
+Content-Type: application/json
+
+{
+  "avroData" : "14, 117, 115, 101, 114, 49, 50, 51, 8, 74, 111, 104, 110, 6, 68, 111, 101, 56, 14, 69, 110, 103, 108, 105, 115, 104, 1, 4, 40, 50, 48, 50, 52, 45, 49, 50, 45, 48, 49, 84, 49, 48, 58, 49, 53, 58, 51, 48, 90, 22, 49, 57, 50, 46, 49, 54, 56, 46, 49, 46, 49, 40, 50, 48, 50, 52, 45, 49, 50, 45, 48, 50, 84, 49, 49, 58, 50, 48, 58, 52, 53, 90, 22, 49, 57, 50, 46, 49, 54, 56, 46, 49, 46, 50, 0",
+  "schema" : {
+    "type": "record",
+    "name": "UserProfile",
+    "namespace": "com.example",
+    "fields": [
+      {
+        "name": "userId",
+        "type": "string"
+      },
+      {
+        "name": "personalInfo",
+        "type": {
+          "type": "record",
+          "name": "PersonalInfo",
+          "fields": [
+            {
+              "name": "firstName",
+              "type": "string"
+            },
+            {
+              "name": "lastName",
+              "type": "string"
+            },
+            {
+              "name": "age",
+              "type": "int"
+            }
+          ]
+        }
+      },
+      {
+        "name": "preferences",
+        "type": {
+          "type": "record",
+          "name": "Preferences",
+          "fields": [
+            {
+              "name": "language",
+              "type": "string"
+            },
+            {
+              "name": "newsletterSubscribed",
+              "type": "boolean"
+            }
+          ]
+        }
+      },
+      {
+        "name": "loginHistory",
+        "type": {
+          "type": "array",
+          "items": {
+            "type": "record",
+            "name": "LoginRecord",
+            "fields": [
+              {
+                "name": "loginTime",
+                "type": "string"
+              },
+              {
+                "name": "ipAddress",
+                "type": "string"
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
+
